@@ -1,6 +1,6 @@
 {
   "name": "almirb/yii2-common",
-  "description": "Classes base, utilitários para utilização nos meus projetos pessoais e nas extensões prontas.",
+  "description": "Common classes for use with my Yii2 projects.",
   "keywords": [
     "yii2",
     "common"
