@@ -11,7 +11,7 @@
  *
  */
 
-namespace almirb\yii2common\components\grid\btactioncolumn;
+namespace almirb\yii2common\components\grid;
 
 use yii;
 use yii\helpers\Html;
