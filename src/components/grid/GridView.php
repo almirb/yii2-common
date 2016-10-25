@@ -28,7 +28,7 @@ class GridView extends KartikGridView
                 'type' => GridView::TYPE_PRIMARY,
                 'heading' => '<span class="glyphicon glyphicon-th-list"></span>  ' . Html::encode($this->getView()->title),
                 'before' => Html::a('<i class="glyphicon glyphicon-plus"></i> ' . Yii::t('app', 'Create'), ['create'], ['class' => 'btn btn-success', 'data-pjax' => 0]),
-                'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> ' . Yii::t('app', 'Reset Filters'), [Yii::$app->controller->action->id], ['class' => 'btn btn-info']),
+                'after' => Html::a('<i class="glyphicon glyphicon-repeat"></i> ' . Yii::t('app', 'Reset Filters'), ['index'], ['class' => 'btn btn-info']),
             ];
         }
 
@@ -42,7 +42,7 @@ class GridView extends KartikGridView
             $this->toolbar = [
                 [
                     'content' =>
-                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', [Yii::$app->controller->action->id], [
+                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], [
                             'class' => 'btn btn-default',
                             'title' => Yii::t('app', 'Reset Filters')]),
                 ],
@@ -58,10 +58,11 @@ class GridView extends KartikGridView
                 GridView::HTML => [],
                 GridView::PDF => [
                     'config' => [
-                        'destination' => \kartik\mpdf\Pdf::DEST_DOWNLOAD,
+                        'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
                         'methods' => [
                             'SetHeader' => [Yii::$app->name . '|' . Yii::t('app', 'Exportação de Dados') . '|' . date('d/m/Y H:i:s', time())],
                             'SetFooter' => ['|{PAGENO}/{nb}|'],
+                            'SetJS' => 'this.print();',
                         ],
                     ],
                 ],
@@ -69,7 +70,7 @@ class GridView extends KartikGridView
         }
 
         if (!$this->export) {
-            $this->export =  ['target' => ExportMenu::TARGET_SELF];
+            $this->export =  ['target' => ExportMenu::TARGET_BLANK];
         }
 
         if (!$this->pager) {
@@ -79,5 +80,3 @@ class GridView extends KartikGridView
         parent::init();
     }
 }
-
-
