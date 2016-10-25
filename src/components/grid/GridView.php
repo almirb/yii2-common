@@ -1,4 +1,3 @@
-
 <?php
 
 namespace almirb\yii2common\components\grid;
