@@ -72,6 +72,13 @@ class GridView extends KartikGridView
         if (!$this->export) {
             $this->export =  ['target' => ExportMenu::TARGET_BLANK];
         }
+        
+        if (!$this->exportConversions) {
+            $this->exportConversions = [
+                ['from' => GridView::ICON_ACTIVE, 'to' => Yii::t('app', 'Yes')],
+                ['from' => GridView::ICON_INACTIVE, 'to' => Yii::t('app', 'No')],
+            ];
+        }
 
         if (!$this->pager) {
             $this->pager = ['firstPageLabel' => Yii::t('app','First'), 'lastPageLabel' => Yii::t('app','Last')];
