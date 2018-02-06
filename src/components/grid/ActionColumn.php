@@ -27,12 +27,12 @@ class ActionColumn extends KartikActionColumn
     /**
      * @inheritdoc
      */
-    public $headerOptions	= ['class' => 'actions-buttons text-center'];
+    public $headerOptions	= ['class' => 'actions-buttons text-center no-print'];
 
     /**
      * @inheritdoc
      */
-    public $contentOptions	= ['class' => 'text-center'];
+    public $contentOptions	= ['class' => 'text-center no-print'];
 
     /**
      * @inheritdoc
@@ -58,7 +58,7 @@ class ActionColumn extends KartikActionColumn
 
         if ($this->noButtonWrap) {
             $width = 10 + (substr_count($this->template, '{') * 36);
-            $this->headerOptions = ['style' => "min-width: {$width}px"];
+            Html::addCssStyle($this->headerOptions, "min-width: {$width}px");
         }
 
         parent::init();
