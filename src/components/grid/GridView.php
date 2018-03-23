@@ -61,7 +61,7 @@ class GridView extends KartikGridView
                         'format' => \kartik\mpdf\Pdf::FORMAT_A4,
                         'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
                         'methods' => [
-                            'SetHeader' => [Yii::$app->name . '|' . Yii::t('app', 'Exportação de Dados') . '|' . date('d/m/Y H:i:s', time())],
+                            'SetHeader' => [Yii::$app->name . '|' . Yii::t('app', 'Exportação de Dados') . '|' . date('d/m/Y H:i', time())],
                             'SetFooter' => ['|{PAGENO}/{nb}|'],
                             'SetJS' => 'this.print();',
                         ],
