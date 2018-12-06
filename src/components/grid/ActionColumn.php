@@ -47,14 +47,14 @@ class ActionColumn extends KartikActionColumn
     function init()
     {
         if (!$this->template) {
-            $this->template = "<span class='btn btn-group btn-group-sm'>{view} {update} {delete}</span>";
+            $this->template = "<span class='btn-group btn-group-sm'>{view} {update} {delete}</span>";
         } else {
-            $this->template = "<span class='btn btn-group btn-group-sm'>" . $this->template . "</span>";
+            $this->template = "<span class='btn-group btn-group-sm'>" . $this->template . "</span>";
         }
 
-        $this->viewOptions     = array_replace_recursive(['class' => static::VIEW_BUTTON_DEFAULT_CLASS],   $this->viewOptions);
-        $this->updateOptions   = array_replace_recursive(['class' => static::UPDATE_BUTTON_DEFAULT_CLASS], $this->updateOptions);
-        $this->deleteOptions   = array_replace_recursive(['class' => static::DELETE_BUTTON_DEFAULT_CLASS], $this->deleteOptions);
+        $this->viewOptions     = array_merge(['class' => static::VIEW_BUTTON_DEFAULT_CLASS],   $this->viewOptions);
+        $this->updateOptions   = array_merge(['class' => static::UPDATE_BUTTON_DEFAULT_CLASS], $this->updateOptions);
+        $this->deleteOptions   = array_merge(['class' => static::DELETE_BUTTON_DEFAULT_CLASS, 'data-pjax' => '1'], $this->deleteOptions);
 
         if ($this->noButtonWrap) {
             $width = 10 + (substr_count($this->template, '{') * 36);
