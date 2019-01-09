@@ -9,6 +9,8 @@ use kartik\export\ExportMenu;
 
 class GridView extends KartikGridView
 {
+    const DATETIME_CACHE_KEY = 'cache.gridview.datetime';
+
     public $pjax  = true;
     public $hover = true;
     public $responsiveWrap = false;
@@ -19,6 +21,22 @@ class GridView extends KartikGridView
         'minCount' => 100,
         'maxCount' => 1000,
     ];
+
+    /**
+     * Function to avoid "The parameters for yii2-grid export seem to be tampered" error, setting a 5 minute cache for datetime.
+     *
+     * @return string
+     */
+    public function getDateTimeString()
+    {
+        if (Yii::$app->cache) {
+            return Yii::$app->cache->getOrSet(static::DATETIME_CACHE_KEY, function () {
+                return date('d/m/Y H:i', time());
+            },300);
+        } else {
+            return date('d/m/Y H:i', time());
+        }
+    }
 
     public function init()
     {
@@ -33,7 +51,7 @@ class GridView extends KartikGridView
         }
 
         if ($this->panelHeadingTitle) {
-                $this->panel['heading'] = $this->panelHeadingTitle;
+            $this->panel['heading'] = $this->panelHeadingTitle;
         }
 
         //Check if is modified
@@ -61,7 +79,7 @@ class GridView extends KartikGridView
                         'format' => \kartik\mpdf\Pdf::FORMAT_A4,
                         'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
                         'methods' => [
-                            'SetHeader' => [Yii::$app->name . '|' . Yii::t('app', 'Exportação de Dados') . '|' . date('d/m/Y H:i', time())],
+                            'SetHeader' => [Yii::$app->name . '|' . $this->getView()->title . '|' . $this->getDateTimeString()],
                             'SetFooter' => ['|{PAGENO}/{nb}|'],
                             'SetJS' => 'this.print();',
                         ],
@@ -73,7 +91,7 @@ class GridView extends KartikGridView
         if (!$this->export) {
             $this->export =  ['target' => ExportMenu::TARGET_BLANK];
         }
-        
+
         if (!$this->exportConversions) {
             $this->exportConversions = [
                 ['from' => GridView::ICON_ACTIVE, 'to' => Yii::t('app', 'Yes')],
