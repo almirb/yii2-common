@@ -22,21 +22,6 @@ class GridView extends KartikGridView
         'maxCount' => 1000,
     ];
 
-    /**
-     * Function to avoid "The parameters for yii2-grid export seem to be tampered" error, setting a 5 minute cache for datetime.
-     *
-     * @return string
-     */
-    public function getDateTimeString()
-    {
-        if (Yii::$app->cache) {
-            return Yii::$app->cache->getOrSet(static::DATETIME_CACHE_KEY, function () {
-                return date('d/m/Y H:i', time());
-            },300);
-        } else {
-            return date('d/m/Y H:i', time());
-        }
-    }
 
     public function init()
     {
@@ -79,7 +64,7 @@ class GridView extends KartikGridView
                         'format' => \kartik\mpdf\Pdf::FORMAT_A4,
                         'destination' => \kartik\mpdf\Pdf::DEST_BROWSER,
                         'methods' => [
-                            'SetHeader' => [Yii::$app->name . '|' . $this->getView()->title . '|' . $this->getDateTimeString()],
+                            'SetHeader' => [Yii::$app->name . '|' . $this->getView()->title . '|{DATE d/m/Y H:i:s}'],
                             'SetFooter' => ['|{PAGENO}/{nb}|'],
                             'SetJS' => 'this.print();',
                         ],
